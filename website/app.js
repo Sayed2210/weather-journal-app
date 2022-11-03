@@ -2,6 +2,10 @@
 const baseURL= 'https://api.openweathermap.org/data/2.5/weather?zip=';
 const apiKey= ',&appid=8d4857d5181f57c8927265fd947e6626&units=imperial';
 
+// Create a new date instance dynamically with JS
+let d = new Date();
+let newDate = d.getMonth() + 1 + '.' + d.getDate() + '.' + d.getFullYear();
+
 //callback function to execute when it is clicked
 const action= () => {
     const newZip= document.getElementById('zip').value;
@@ -9,7 +13,7 @@ const action= () => {
 //Function to GET Web API DATA
     getWeather(baseURL,newZip,apiKey).then((data) => {
         postData('/add',{
-            data:newDate,
+            date:newDate,
             temp:data.main.temp,
             content:feelings
         })
@@ -59,7 +63,7 @@ async function updateUI(){
     const req= await fetch('/all');
     try {
         const allData= await req.json();
-        document.getElementById('date').innerHTML= `Data : ${allData.data}`;
+        document.getElementById('date').innerHTML= `Data : ${allData.date}`;
         document.getElementById('temp').innerHTML= `temp : ${allData.temp}`;
         document.getElementById('content').innerHTML= `Fellings : ${allData.content}`;
     } catch (error) {
@@ -67,7 +71,5 @@ async function updateUI(){
     }
 }
 
-// Create a new date instance dynamically with JS
-let d = new Date();
-let newDate = d.getMonth() + 1 + '.' + d.getDate() + '.' + d.getFullYear();
+
 
